@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up Form by Colorlib</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="static/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+    <div class="main">
+
+        <div class="container">
+            <form method="POST" action="submit" class="appointment-form" id="appointment-form">
+                <h2>education appointment form</h2>
+                <div class="form-group-1">
+                    <input type="text" name="title" id="title" placeholder="Title" required />
+                    <input type="text" name="name" id="name" placeholder="Your Name" required />
+                    <input type="email" name="email" id="email" placeholder="Email" required />
+                    <input type="number" name="phone_number" id="phone_number" placeholder="Phone number" required />
+                    <input type="hidden" name="course_type" id="hidden_course_type">
+                    <input type="hidden" name="confirm_type" id="hidden_confirm_type">
+                    <input type="hidden" name="hour_appointment" id="hidden_hour_appointment">
+
+                    <div class="">
+                        <select name="course_type" id="course" onchange="handleDropdownChange(event, 'hidden_course_type')" required>
+                            <option slected value="">Course Type</option>
+                            <option value="job_interview">Job Interview</option>
+                            <option value="knowledge_interview">Knowledge Interview</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group-2">
+                    <h3>How would you like to bo located ?</h3>
+                    <div class="">
+                        <select name="confirm_type" id="confirm" onchange="handleDropdownChange(event, 'hidden_confirm_type')" required>
+                            <option seleected value="by_phone">By phone</option>
+                            <option value="by_email">By email</option>
+                        </select>
+                    </div>
+                    <div class="">
+                        <select name="hour_appointment" id="hour" onchange="handleDropdownChange(event, 'hidden_hour_appointment')" required>
+                            <option seleected value="8h-10h">Hours : 8am 10pm</option>
+                            <option value="14h-16h">Hours : 2pm 4pm</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" name="agree_term" id="agree-term" class="agree-term" />
+                    <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree to the  <a href="#" class="term-service">Terms and Conditions</a></label>
+                </div>
+                <div class="form-submit">
+                    <!-- <input type="submit" name="submit" id="submit" class="submit" value="Register" /> -->
+                    <button type="submit" name="submit" id="submit" class="submit">Register</button>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- JS -->
+    <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/js/main.js"></script>
+    <script>
+        function handleDropdownChange(event, hiddenInputId) {
+        const selectedValue = event.target.value;
+        const hiddenInput = document.getElementById(hiddenInputId);
+
+    if (hiddenInput) {
+        hiddenInput.value = selectedValue;
+        console.log(`${hiddenInputId} updated to: ${selectedValue}`);
+    }
+}
+
+    </script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

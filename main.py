@@ -19,9 +19,9 @@ async def read_item(request: Request):
 
 
 
-@app.post("/")
+@app.post("/submit")
 async def create_item(request: Request):
-    form_data = await request.form()  # Extract all form data
-    form_data_dict = dict(form_data)  # Convert to dictionary
-    print(form_data_dict)  
-    return {"message": "Data received successfully", "data": {}}
+    form_data = await request.form()
+    form_data_dict = dict(form_data)
+    print(form_data_dict)
+    return {"message": "Data received successfully", "data": form_data_dict}

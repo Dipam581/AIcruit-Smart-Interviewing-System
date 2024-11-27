@@ -5,7 +5,9 @@ class Register(BaseModel):
     title: str
     name: str
     email: str
-    phone_number: int
+    phone_number: str
     course_type: str
     confirm_type: str
     hour_appointment: str
+    agree_term: str
+    submit: str | None
