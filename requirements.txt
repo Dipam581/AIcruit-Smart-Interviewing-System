@@ -4,4 +4,7 @@ pyjwt
 passlib[bcrypt]
 
 pyaudio
-git+https://github.com/openai/whisper.git
+# git+https://github.com/openai/whisper.git
+assemblyai
+
+gradio

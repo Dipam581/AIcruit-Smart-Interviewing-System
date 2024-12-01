@@ -2,48 +2,9 @@ import pyaudio
 import wave
 import whisper
 import warnings
+import os
 warnings.filterwarnings("ignore", message="FP16 is not supported on CPU; using FP32 instead")
-
-# # Parameters for recording
-# CHUNK = 1024  # Number of audio frames per buffer
-# FORMAT = pyaudio.paInt16  # Format for audio stream
-# CHANNELS = 1  # Mono audio
-# RATE = 44100  # Sampling rate (44.1 kHz)
-# RECORD_SECONDS = 10  # Duration of recording
-# OUTPUT_FILE = "output.mp4"  # File to save the recording
-
-# # Initialize PyAudio
-# audio = pyaudio.PyAudio()
-
-# # Open the audio stream
-# stream = audio.open(format=FORMAT, channels=CHANNELS,
-#                     rate=RATE, input=True,
-#                     frames_per_buffer=CHUNK)
-
-# print("Recording...")
-
-# frames = []
-
-# # Record audio in chunks
-# for _ in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
-#     data = stream.read(CHUNK)
-#     frames.append(data)
-
-# print("Finished recording!")
-
-# # Stop and close the stream
-# stream.stop_stream()
-# stream.close()
-# audio.terminate()
-
-# # Save the recording to a file
-# with wave.open(OUTPUT_FILE, 'wb') as wf:
-#     wf.setnchannels(CHANNELS)
-#     wf.setsampwidth(audio.get_sample_size(FORMAT))
-#     wf.setframerate(RATE)
-#     wf.writeframes(b''.join(frames))
-
-# print(f"Audio saved to {OUTPUT_FILE}")
+import assemblyai as aai
 
 
 class Record_Voice():
@@ -90,11 +51,26 @@ class Record_Voice():
 
     
     def fetch_transcript(self):
-        model = whisper.load_model("base")
-        result = model.transcribe(self.OUTPUT_FILE)
+        aai.settings.api_key = "6fc33d41f46a4c908b132acb3b48f2d6"
 
-        print("Transcription:")
-        print(result["text"])
+        transcriber = aai.Transcriber()
+
+        audio_file = (
+            self.OUTPUT_FILE
+        )
+
+        config = aai.TranscriptionConfig(speaker_labels=True)
+
+        transcript = transcriber.transcribe(audio_file, config)
+
+        if transcript.status == aai.TranscriptStatus.error:
+            print(f"Transcription failed: {transcript.error}")
+            exit(1)
+
+        print(transcript.text)
+
+        for utterance in transcript.utterances:
+            print(f"Speaker {utterance.speaker}: {utterance.text}")
 
 
 recorder = Record_Voice()
