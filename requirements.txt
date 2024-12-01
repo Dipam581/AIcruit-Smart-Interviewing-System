@@ -2,3 +2,6 @@ fastapi[standard]
 jinja2
 pyjwt
 passlib[bcrypt]
+
+pyaudio
+git+https://github.com/openai/whisper.git
