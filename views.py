@@ -1,33 +1,29 @@
 import gradio as gr
-import wave
+import speech_recognition as sr
 
-# Function to save audio to a file
-def save_audio_to_file(audio):
-    if audio is None:
-        return "No audio was recorded!"
-
-    file_path, sample_rate = audio  # `audio` is a tuple (file_path, sample_rate)
-
-    # Read the recorded audio file
-    with open(file_path, "rb") as f:
-        audio_data = f.read()
-
-    # Save the audio to a new file (e.g., "output.wav")
-    output_file = "output.wav"
-    with wave.open(output_file, "wb") as wf:
-        wf.setnchannels(1)  # Assuming mono audio
-        wf.setsampwidth(2)  # Assuming 16-bit audio (2 bytes)
-        wf.setframerate(sample_rate)
-        wf.writeframes(audio_data)
-
-    return f"Audio successfully saved to {output_file}!"
+# Function to process the audio input
+def process_audio(audio):
+    recognizer = sr.Recognizer()
+    try:
+        with sr.AudioFile(audio) as source:
+            audio_data = recognizer.record(source)
+            text = recognizer.recognize_google(audio_data)
+            response = f"Received: {text}."
+    except Exception as e:
+        response = "Could not recognize your voice."
+    return response
 
 # Gradio Interface
-interface = gr.Interface(
-    fn=save_audio_to_file,
-    inputs=gr.Audio(type="filepath", label="Record or Upload Audio"),  # Capture audio
-    outputs="text",  # Text output to indicate save status
-    live=False  # Disable live mode for non-streaming use
-)
+with gr.Blocks() as voice_assistant:
+    gr.Markdown("## Voice Assistant")
+    gr.Markdown("Talk to the assistant by recording your voice.")
+    audio_input = gr.Audio(type="filepath", label="Upload or Record Your Voice")
+    
+    with gr.Row():
+        output = gr.Textbox(label="Assistant Response")
+        audio_input.change(process_audio, inputs=audio_input, outputs=output)
+        response = gr.Textbox()
+    
+    submit = gr.Button("Submit")
 
-interface.launch()
+voice_assistant.launch(debug=True)
