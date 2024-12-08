@@ -6,7 +6,6 @@ from langchain_mistralai import ChatMistralAI
 from langchain_core.prompts import ChatPromptTemplate
 from gtts import gTTS
 import time
-import threading
 import pyttsx3
 
 
@@ -18,7 +17,7 @@ class VoiceAchiver():
     def __init__(self):
         self.audio_file = "recorded_audio.wav"
         self.tts_engine = pyttsx3.init()
-        self.tts_engine.setProperty('rate', 200)
+        self.tts_engine.setProperty('rate', 150)
 
     def fetch_transcript(self):
         aai.settings.api_key = "6fc33d41f46a4c908b132acb3b48f2d6"
@@ -37,9 +36,16 @@ class VoiceAchiver():
     def get_response_from_llm(self,transcript):
         
         model = ChatMistralAI(model="mistral-large-latest")
-        system_template = '''Suppose you are an interviewer who is interviewing a candidate. The candidate gives answer of your question. You have to 
-                            ask question based on his answer and make the interview level higher to judge the candidate.
-                            '''
+        system_template = '''You are an interviewer conducting an interview for a Data Science and Artificial Intelligence role. 
+                            The candidate answers your questions, and your task is to respond by asking follow-up questions based on their answers. 
+
+                            Your follow-up questions should:
+                            - Be thoughtful and tailored to the candidate's responses.
+                            - Gradually increase in difficulty to evaluate the candidate's depth of knowledge and problem-solving skills.
+                            - Be detailed and well-structured, avoiding overly brief or vague phrasing.
+
+                            Maintain a professional tone throughout the interview.'''
+
 
         prompt_template = ChatPromptTemplate.from_messages(
             [("system", system_template), ("user", "{text}")]
