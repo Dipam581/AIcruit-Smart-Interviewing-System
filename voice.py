@@ -40,6 +40,7 @@ class Record_Voice():
         self.save_recording_file(audio)
 
     def save_recording_file(self,audio):
+        print("audio-->", audio)
 
         with wave.open(self.OUTPUT_FILE, 'wb') as wf:
             wf.setnchannels(self.CHANNELS)

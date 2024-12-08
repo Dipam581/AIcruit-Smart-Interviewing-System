@@ -9,3 +9,13 @@ assemblyai
 
 gradio
 SpeechRecognition
+
+streamlit
+transformers
+
+langchain
+langchain-mistralai
+langchain_core
+gTTS
+pyttsx3
+streamlit-components
