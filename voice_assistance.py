@@ -1,10 +1,8 @@
 import streamlit as st
 import assemblyai as aai
-import getpass
 import os
 from langchain_mistralai import ChatMistralAI
 from langchain_core.prompts import ChatPromptTemplate
-from gtts import gTTS
 import time
 import pyttsx3
 
