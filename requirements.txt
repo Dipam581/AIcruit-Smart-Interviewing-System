@@ -19,3 +19,4 @@ langchain_core
 # gTTS
 pyttsx3
 # streamlit-components
+# streamlit-audiorecorder

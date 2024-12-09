@@ -5,6 +5,7 @@ from langchain_mistralai import ChatMistralAI
 from langchain_core.prompts import ChatPromptTemplate
 import time
 import pyttsx3
+import uuid
 
 
 os.environ["MISTRAL_API_KEY"] = "PAPSilB8Xtq8IjvensOxoVdjkRuke2oi"
@@ -15,7 +16,7 @@ class VoiceAchiver():
     def __init__(self):
         self.audio_file = "recorded_audio.wav"
         self.tts_engine = pyttsx3.init()
-        self.tts_engine.setProperty('rate', 150)
+        self.tts_engine.setProperty('rate', 180)
 
     def fetch_transcript(self):
         aai.settings.api_key = "6fc33d41f46a4c908b132acb3b48f2d6"
@@ -97,3 +98,5 @@ if audio_input:
         st.session_state.messages.append({"role": "assistant", "content": bot_response})
         
         vc.convert_msg_to_audio(bot_response)
+
+    
